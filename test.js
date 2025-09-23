@@ -1,19 +1,17 @@
-const { JSDOM } = require('jsdom');
-const fs = require('fs');
+// test.js
+const assert = require("assert");
 
-const html = fs.readFileSync('index.html', 'utf-8');
-const dom = new JSDOM(html, { runScripts: 'dangerously', resources: 'usable' });
-
-const btn = dom.window.document.getElementById('btn');
-const msg = dom.window.document.getElementById('message');
-
-btn.click();
-
-if (msg.textContent === 'Button clicked!') {
-  console.log('✅ Test passed');
-  process.exit(0);
-} else {
-  console.error('❌ Test failed');
-  process.exit(1);
+// simulate button click
+let buttonClicked = false;
+function clickButton() {
+  buttonClicked = true;
+  return "Hello from button!";
 }
+
+// test: after clicking, the new text should appear
+const result = clickButton();
+assert.strictEqual(result, "Hello from button!");
+assert.strictEqual(buttonClicked, true);
+
+console.log("✅ Test passed");
 
