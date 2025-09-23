@@ -1,0 +1,12 @@
+{
+  "name": "circleci-sample-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "jsdom": "^22.1.0"
+  }
+}
+
