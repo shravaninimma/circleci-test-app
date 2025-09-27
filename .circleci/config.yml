@@ -3,12 +3,12 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:18-browsers  # <- includes Chrome/Chromium & Puppeteer deps
+      - image: cimg/node:18.20.1-browsers  # updated Node + browsers image
 
     steps:
       - checkout
 
-      # Install npm dependencies
+      # Install dependencies
       - run: npm install
 
       # Run tests
