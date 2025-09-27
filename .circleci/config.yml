@@ -1,20 +1,45 @@
 version: 2.1
 
 jobs:
-  test:
+  build:
     docker:
-      - image: cimg/node:18.19
+      - image: cimg/node:18.20  # Node 18 LTS
+
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Run tests
-          command: npm test
+
+      # Ensure dependencies are up-to-date
+      - run: npm install
+
+      # Explicitly install Chromium that Puppeteer will use
+      - run: npx puppeteer browsers install chrome
+
+      # Install required libraries for Chromium runtime
+      - run: sudo apt-get update && sudo apt-get install -y \
+          libx11-xcb1 \
+          libxcomposite1 \
+          libxcursor1 \
+          libxdamage1 \
+          libxi6 \
+          libxtst6 \
+          libnss3 \
+          libxrandr2 \
+          libasound2 \
+          libpangocairo-1.0-0 \
+          libatk1.0-0 \
+          libcups2 \
+          libdrm2 \
+          libgbm1 \
+          libxshmfence1 \
+          fonts-liberation \
+          libappindicator3-1 \
+          xdg-utils
+
+      # Run tests
+      - run: npm test
 
 workflows:
-  test_workflow:
+  build_and_test:
     jobs:
-      - test
+      - build
 
